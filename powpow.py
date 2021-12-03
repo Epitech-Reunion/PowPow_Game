@@ -30,8 +30,14 @@ p2_loose = pygame.image.load("assets/sprites/p2_loose.png").convert()
 
 p1_stand = pygame.transform.scale(p1_stand, (100, 100))
 p2_stand = pygame.transform.scale(p2_stand, (100, 100))
-
+p1_loose = pygame.transform.scale(p1_loose, (100, 100))
+p2_loose = pygame.transform.scale(p2_loose, (100, 100))
+p1_atk = pygame.transform.scale(p1_atk, (150, 150))
+p2_atk = pygame.transform.scale(p2_atk, (150, 150))
 p2_stand = pygame.transform.flip(p2_stand, True, False)
+p2_loose = pygame.transform.flip(p2_loose, True, False)
+p2_atk = pygame.transform.flip(p2_atk, True, False)
+
 
 font = pygame.font.SysFont(None, 24)
 
@@ -51,8 +57,6 @@ def pause_loop():
     pause = True
     while pause:
         for e in pygame.event.get():
-            if e.type == pygame.QUIT:
-                pause = False
             if e.type == pygame.KEYDOWN:
                 pause = False
 
@@ -64,7 +68,7 @@ def match_loop():
     yoo_sound.play()
     #yoo_sound.stop()
     while running:
-        for e in  pygame.event.get():
+        for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False
             if e.type == pygame.KEYDOWN:
@@ -82,7 +86,6 @@ def match_loop():
             atk = True
         if atk and pygame.time.get_ticks() - _delay >= __delay:
             atk = False
-        
         screen.fill((0, 0, 0))
         if atk:
             pygame.draw.rect(screen, (0, 255, 0), exclam)
@@ -97,16 +100,23 @@ def match_loop():
         pygame.display.update()
         clock.tick(60)
 
-def game_loop():
+def match():
     winner = match_loop()
     yoo_sound.stop()
+    screen.fill((0, 0, 0))
     txt = font.render(f"{winner} WINS THIS MATCH", True, (255, 0, 0) if winner == "p1" else (0, 0, 255))
+    if winner == "p1":
+        screen.blit(p1_atk, (w - 200, h / 2))
+        screen.blit(p2_loose, (w - 100, h / 2))
+    else:
+        screen.blit(p2_atk, (100, h / 2))
+        screen.blit(p1_loose, (0, h / 2))
     screen.blit(txt, (20, 20))
     pygame.display.update()
     pause_loop()
     return winner
 
-final_score = [game_loop(), game_loop(), game_loop()]
+final_score = [match(), match(), match()]
 game_winner = "p1" if final_score.count("p1") > final_score.count("p2") else "p2"
 txt = font.render(f"{game_winner} WINS THE GAME", True, (255, 0, 0) if game_winner == "p1" else (0, 0, 255))
 screen.blit(txt, (w / 2, 20))
