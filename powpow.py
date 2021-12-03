@@ -62,31 +62,33 @@ while running:
                     p1_state = pygame.time.get_ticks() - _delay
                 else:
                     win = "p2"
+                    atk = True
             if e.key == p2_key:
                 if atk:
                     p2_state = pygame.time.get_ticks() - _delay
                 else:
                     win = "p1"
+                    atk = True
     if (pygame.time.get_ticks() >= _delay) and not atk:
         atk = True
     if atk and pygame.time.get_ticks() - _delay >= __delay:
         atk = False
+    
     screen.fill((0, 0, 0))
     if atk:
         pygame.draw.rect(screen, (0, 255, 0), exclam)
     if p1_state == -1 and p2_state != -1:
         win = "p2"
-    if p1_state != -1 and p2_state == -1:
+    elif p1_state != -1 and p2_state == -1:
         win = "p1"
-    if p1_state != -1 and p2_state != -1:
+    elif p1_state != -1 and p2_state != -1:
         win = "p1" if p1_state < p2_state else "p2"
     if win != None:
+        atk = False
+        print(win)
         img = font.render(f"{win} WINS", True, (255, 0, 0) if win == "p1" else (0, 0, 255))
-        screen.blit(img, (w / 2, 50))
-        running = False
-        time.sleep(5)
-
-
+        screen.blit(img, (20, 20))
+        
     screen.blit(p1_stand, (0, h / 2))
     screen.blit(p2_stand, (w - 100, h / 2))
     pygame.display.update()
