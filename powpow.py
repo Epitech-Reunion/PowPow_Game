@@ -12,18 +12,24 @@ clock = Clock()
 w = screen.get_width()
 h = screen.get_height()
 
-exclam = pygame.image.load("assets/exclam.png").convert()
-background = pygame.image.load("assets/background.png").convert()
-p1_stand = pygame.image.load("assets/p1_stand.png").convert()
-p2_stand = pygame.image.load("assets/p2_stand.png").convert()
-p1_atk = pygame.image.load("assets/p1_atk.png").convert()
-p2_atk = pygame.image.load("assets/p2_atk.png").convert()
-p1_loose = pygame.image.load("assets/p1_loose.png").convert()
-p2_loose = pygame.image.load("assets/p2_loose.png").convert()
+yoo_sound = pygame.mixer.Sound('assets/sound/yoo.wav')
+#exclam = pygame.image.load("assets/sprites/exclam.png").convert()
+#background = pygame.image.load("assets/sprites/background.png").convert()
+p1_stand = pygame.image.load("assets/sprites/p1_stand.png").convert()
+p2_stand = pygame.image.load("assets/sprites/p2_stand.png").convert()
+p1_atk = pygame.image.load("assets/sprites/p1_atk.png").convert()
+p2_atk = pygame.image.load("assets/sprites/p2_atk.png").convert()
+p1_loose = pygame.image.load("assets/sprites/p1_loose.png").convert()
+p2_loose = pygame.image.load("assets/sprites/p2_loose.png").convert()
 
-p1 = pygame.Rect(30, h / 2 , 30, 30)
-p2 = pygame.Rect(w - 60, h / 2, 30, 30)
+pygame.transform.scale(p1_stand, (100, 100))
+pygame.transform.scale(p2_stand, (100, 100))
+
+
 exclam = pygame.Rect(w / 2, h / 2, 60, 60)
+
+p1 = p1_stand.get_rect()
+p2 = p2_stand.get_rect()
 
 win = None
 p1_state = -1
@@ -37,6 +43,9 @@ _delay = random.randrange(3000, 10000)
 __delay = 5000
 atk = False
 
+
+yoo_sound.play()
+#yoo_sound.stop()
 while running:
     for e in  pygame.event.get():
         if e.type == pygame.QUIT:
@@ -68,6 +77,9 @@ while running:
     if win != None:
         print(win)
         running = False
-    pygame.draw.rect(screen, (255, 0, 0), p1)
-    pygame.draw.rect(screen, (0, 0, 255), p2)
+
+    screen.blit(p1_stand, p1)
+    screen.blit(p2_stand, p2)
+    pygame.draw.rect(screen, (255, 0, 0), p1, 1)
+    pygame.draw.rect(screen, (0, 0, 255), p2, 1)
     pygame.display.update()
