@@ -4,6 +4,7 @@ from pygame.event import get
 from pygame.locals import *
 from pygame.time import *
 import random
+import time
 
 pygame.init()
 pygame.font.init()
@@ -83,6 +84,8 @@ while running:
         img = font.render(f"{win} WINS", True, (255, 0, 0) if win == "p1" else (0, 0, 255))
         screen.blit(img, (w / 2, 50))
         running = False
+        time.sleep(5)
+
 
     screen.blit(p1_stand, (0, h / 2))
     screen.blit(p2_stand, (w - 100, h / 2))
