@@ -12,6 +12,15 @@ clock = Clock()
 w = screen.get_width()
 h = screen.get_height()
 
+exclam = pygame.image.load("assets/exclam.png").convert()
+background = pygame.image.load("assets/background.png").convert()
+p1_stand = pygame.image.load("assets/p1_stand.png").convert()
+p2_stand = pygame.image.load("assets/p2_stand.png").convert()
+p1_atk = pygame.image.load("assets/p1_atk.png").convert()
+p2_atk = pygame.image.load("assets/p2_atk.png").convert()
+p1_loose = pygame.image.load("assets/p1_loose.png").convert()
+p2_loose = pygame.image.load("assets/p2_loose.png").convert()
+
 p1 = pygame.Rect(30, h / 2 , 30, 30)
 p2 = pygame.Rect(w - 60, h / 2, 30, 30)
 exclam = pygame.Rect(w / 2, h / 2, 60, 60)
@@ -23,17 +32,13 @@ p1_key = pygame.K_m
 p2_key = pygame.K_s
 
 running = True
-
 screen.fill((0, 0, 0))
-
 _delay = random.randrange(3000, 10000)
 __delay = 5000
-print(_delay)
 atk = False
 
 while running:
-    print(pygame.key.get_pressed())
-    for e in  pygame.event.get():#
+    for e in  pygame.event.get():
         if e.type == pygame.QUIT:
             running = False
         if e.type == pygame.KEYDOWN:
@@ -47,17 +52,13 @@ while running:
                     p2_state = pygame.time.get_ticks() - _delay
                 else:
                     win = "p1"
-            
     if (pygame.time.get_ticks() >= _delay) and not atk:
         atk = True
-    
     if atk and pygame.time.get_ticks() - _delay >= __delay:
         atk = False
-        
     screen.fill((0, 0, 0))
     if atk:
         pygame.draw.rect(screen, (0, 255, 0), exclam)
-        
     if p1_state == -1 and p2_state != -1:
         win = "p2"
     if p1_state != -1 and p2_state == -1:
@@ -67,8 +68,6 @@ while running:
     if win != None:
         print(win)
         running = False
-        
     pygame.draw.rect(screen, (255, 0, 0), p1)
     pygame.draw.rect(screen, (0, 0, 255), p2)
-    #pygame.display.flip()
     pygame.display.update()
