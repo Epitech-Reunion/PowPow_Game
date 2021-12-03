@@ -1,3 +1,4 @@
+from numpy import csingle
 import pygame
 from pygame.event import get
 from pygame.locals import *
@@ -22,14 +23,14 @@ p2_atk = pygame.image.load("assets/sprites/p2_atk.png").convert()
 p1_loose = pygame.image.load("assets/sprites/p1_loose.png").convert()
 p2_loose = pygame.image.load("assets/sprites/p2_loose.png").convert()
 
-pygame.transform.scale(p1_stand, (100, 100))
-pygame.transform.scale(p2_stand, (100, 100))
+p1_stand = pygame.transform.scale(p1_stand, (100, 100))
+p2_stand = pygame.transform.scale(p2_stand, (100, 100))
+
+p2_stand = pygame.transform.flip(p2_stand, True, False)
 
 
 exclam = pygame.Rect(w / 2, h / 2, 60, 60)
 
-p1 = p1_stand.get_rect()
-p2 = p2_stand.get_rect()
 
 win = None
 p1_state = -1
@@ -78,8 +79,6 @@ while running:
         print(win)
         running = False
 
-    screen.blit(p1_stand, p1)
-    screen.blit(p2_stand, p2)
-    pygame.draw.rect(screen, (255, 0, 0), p1, 1)
-    pygame.draw.rect(screen, (0, 0, 255), p2, 1)
+    screen.blit(p1_stand, (0, h / 2))
+    screen.blit(p2_stand, (w - 100, h / 2))
     pygame.display.update()
