@@ -12,6 +12,8 @@ screen = pygame.display.set_mode((800, 800))
 clock = Clock()
 w = screen.get_width()
 h = screen.get_height()
+font = pygame.font.SysFont(None, 24)
+
 
 yoo_sound = pygame.mixer.Sound('assets/sound/yoo.wav')
 #exclam = pygame.image.load("assets/sprites/exclam.png").convert()
@@ -27,6 +29,8 @@ p1_stand = pygame.transform.scale(p1_stand, (100, 100))
 p2_stand = pygame.transform.scale(p2_stand, (100, 100))
 
 p2_stand = pygame.transform.flip(p2_stand, True, False)
+
+font = pygame.font.SysFont(None, 24)
 
 
 exclam = pygame.Rect(w / 2, h / 2, 60, 60)
@@ -76,9 +80,11 @@ while running:
     if p1_state != -1 and p2_state != -1:
         win = "p1" if p1_state < p2_state else "p2"
     if win != None:
-        print(win)
+        img = font.render(f"{win} WINS", True, (255, 0, 0) if win == "p1" else (0, 0, 255))
+        screen.blit(img, (w / 2, 50))
         running = False
 
     screen.blit(p1_stand, (0, h / 2))
     screen.blit(p2_stand, (w - 100, h / 2))
     pygame.display.update()
+    clock.tick(60)
